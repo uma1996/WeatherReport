@@ -1,0 +1,36 @@
+body{
+    margin-top: 30px;
+    background-color: whitesmoke
+}
+#containers {
+                height: 100vh;
+                width: 50vw;
+                margin: 25vh auto;
+                margin-top: 35px;
+                margin-bottom: 10px;
+                border: 2px solid ;
+                background-color: white;
+            }
+
+    
+ h3{
+                font-family: cursive
+            }
+           
+.weathervalue
+{
+    float: right;
+    table-layout: fixed;
+    
+}
+
+table {
+     margin-top: 70px;
+     margin-right: 70px; 
+    } 
+
+    #img-container
+    {
+        height: 50vh;;
+        width: 50vh;
+    }
