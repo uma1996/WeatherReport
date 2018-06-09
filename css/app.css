@@ -57,6 +57,16 @@ h1{
 
     #img-container
     {
-        height: 50vh;;
+        height: 50vh;
         width: 50vh;
     }
+    .inner{
+       display: flex;
+       justify-content: "space-evenly";
+            }
+    .outer{
+        display: flex;
+        justify-content: "space-evenly";
+        }
+        
+ 

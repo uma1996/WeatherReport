@@ -131,10 +131,10 @@ $('#weathermap').click(() => {
  //             break;
  //         case "http://icons.wxug.com/i/c/k/nt_snow.gif":
  //         case "http://icons.wxug.com/i/c/k/snow.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/snow.png");
+ //             $("#icon").attr("src", "https://ssl.gstatif":
+ //         case "http://icons.wxug.com/i/c/k/tstorms.gif"c.com/onebox/weather/64/snow.png");
  //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_tstorms.gif":
- //         case "http://icons.wxug.com/i/c/k/tstorms.gif":
+ //         case "http://icons.wxug.com/i/c/k/nt_tstorms.gi:
  //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png");
  //             break;
  //     }
@@ -164,7 +164,7 @@ $('#weathermap').click(() => {
              console.log(data);
             //  var a= data.list[0].dt_txt[0];
             //  var listOfDates = "http://openweathermap.org/img/w/" + a;
-            listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('ddd, h:mm a'));
+            listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('h:mm a'));
              console.log(listOfDates);
              listOfTemp = data.list.map(ele => Math.round(ele.main.temp - 270));
              console.log(listOfTemp);
@@ -216,9 +216,6 @@ $('#weathermap').click(() => {
                      symbol: 'square'
                  },
                  data: tempArr
-             
- 
- 
              }]
          });
      }
@@ -226,18 +223,18 @@ $('#weathermap').click(() => {
  })
  
  $('#pressure').click(() => {
-     // const cityName = $('#cityInput').val();
+     const cityNames = $('#cityInput').val();
      $.ajax({
          type: 'GET',
-         url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=133b42fff699f45866056ed2e4a093db`,
+         url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityNames}&appid=133b42fff699f45866056ed2e4a093db`,
          success: (data) => {
              console.log('In success callback');
              console.log(data);
-             listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('dddd, h:mm a'));
-            console.log(listOfDates);
-             listOfTemp = data.list.map(ele => Math.round(ele.main.temp - 270));
+             listOfDatess = data.list.map((ele) => moment(ele.dt * 1000).format('h:mm a'));
+             console.log(listOfDates);
+             listOfTemps = data.list.map(ele => Math.round(ele.main.pressure));
              console.log(listOfTemp);
-             plotChart(listOfTemp, listOfDates);
+             plotCharts(listOfTemps, listOfDatess);
              
          },
          error: (err) => {
@@ -245,80 +242,152 @@ $('#weathermap').click(() => {
              console.log(err);
          }
      });
+
+     const plotCharts = (tempArrs, datesArrs) => {
  
-     // const plotChart = (tempArr, datesArr) => {
-     //     $('#chart-container').show();
- 
- 
- 
-    //  $.getJSON(
-    //     'https://cdn.rawgit.com/highcharts/highcharts/057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/usdeur.json',
-    //     function (data) {
-        const plotChart = (tempArr, datesArr) => {
-      
-          Highcharts.chart('container', {
+             $.getJSON(
+            'https://cdn.rawgit.com/highcharts/highcharts/057b672172ccc6c08fe7dbb27fc17ebca3f5b770/samples/data/usdeur.json',
+            function () {
+              Highcharts.chart('chart-container', {
+                chart: {
+                  zoomType: 'x'
+                },
+                title: {
+                  text: 'pressure'
+                },
+                xAxis: {
+                    categories: datesArrs
+                },
+                yAxis: {
+                  title: {
+                    text: 'pressure'
+                  },
+                 labels: {
+                    formatter: function () { return this.value + 'Hg'; }
+                },
+            },
+                legend: {
+                  enabled: false
+                 },
+                plotOptions: {
+                  area: {
+                    fillColor: {
+                      linearGradient: {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 1
+                      },
+                      stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                      ]
+                    },
+                    marker: {
+                      radius: 2
+                    },
+                    lineWidth: 5,
+                    states: {
+                      hover: {
+                        lineWidth: 3
+                      }
+                    },
+                    threshold: null
+                  }
+                },
+          
+                series: [{
+                    name: cityNames,
+                    marker: {
+                        symbol: 'square'
+                    },
+                    data: tempArrs
+                }]
+              });
+            }
+        );
+        
+    }
+    })
+     
+
+    $('#wind').click(() => {
+        const cityName1 = $('#cityInput').val();
+        $.ajax({
+            type: 'GET',
+            url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityName1}&appid=133b42fff699f45866056ed2e4a093db`,
+            success: (data) => {
+                console.log('In success callback');
+                console.log(data);
+                listOfDates1 = data.list.map((ele) => moment(ele.dt * 1000).format('h:mm a'));
+                console.log(listOfDates1);
+                listOfwind1 = data.list.map(ele => Math.round((ele.wind.deg * 5) / 18));
+                console.log(listOfwind1);
+                plotCharts(listOfwind1, listOfDates1);
+                
+            },
+            error: (err) => {
+                console.log('In error callback');
+                console.log(err);
+            }
+        });
+
+        const plotCharts = (windArr1, datesArr1) => {
+        Highcharts.chart('chart-container', {
             chart: {
-              zoomType: 'x'
+              type: 'spline',
+              inverted: true
             },
             title: {
-              text: 'Pressure'
-            },
-            subtitle: {
-              text: document.ontouchstart === undefined ?
-                  'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+              text: 'wind'
             },
             xAxis: {
-              type: 'datesArr'
-            },
-            yAxis: {
+                reversed: false,
                 title: {
-                    text: 'Temperature'
+                  enabled: true,
+                  text: 'Altitude'
                 },
                 labels: {
-                    formatter: function () { return this.value + '°'; }
-                }
-            },
+                  format: '{value} km'
+                },
+                maxPadding: 0.05,
+                showLastLabel: true
+              },     
+                 yAxis: {
+                     categories: datesArr1,
+                    title: {
+                      text: 'width'
+                    },
+                     lineWidth: 2
+                  },
+                        
+        
             legend: {
               enabled: false
             },
+            // tooltip: {
+            //   headerFormat: '<b>{series.name}</b><br/>',
+            //   pointFormat: '{point.x} km: {point.y}°C'
+            // },
             plotOptions: {
-              area: {
-                fillColor: {
-                  linearGradient: {
-                    x1: 0,
-                    y1: 0,
-                    x2: 0,
-                    y2: 1
-                  },
-                  stops: [
-                    [0, Highcharts.getOptions().colors[0]],
-                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                  ]
-                },
+              spline: {
                 marker: {
-                  radius: 2
-                },
-                lineWidth: 1,
-                states: {
-                  hover: {
-                    lineWidth: 1
-                  }
-                },
-                threshold: null
+                  enable: false
+                }
               }
             },
-      
             series: [{
-              type: cityName,
-              name: 'pressure',
-              data: tempArr
+                name: cityName1,
+                marker: {
+                    symbol: 'square'
+                },
+                data: windArr1
             }]
           });
         }
-      
     })
-     
- 
+
+    
  
  
  
