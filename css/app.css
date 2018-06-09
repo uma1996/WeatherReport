@@ -1,15 +1,46 @@
 body{
     margin-top: 30px;
-    background-color: whitesmoke
+    background-color:skyblue;
 }
-#containers {
-                height: 100vh;
-                width: 50vw;
+
+#currentname{
+    font-family: arial,sans-serif;
+    font-size: 1cm;
+    margin-left:10vh;
+}
+
+#location{
+    font-size: 1cm;
+    margin-left:10vh;
+}
+
+ #dates{
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+
+} 
+
+
+#btn-align{
+    margin-left: 70px;
+}
+
+h1{
+
+    margin-left: 65vh;
+
+}
+    
+    
+    #containers {
+                height: 130vh;
+                width: 100vh;
                 margin: 25vh auto;
                 margin-top: 35px;
                 margin-bottom: 10px;
                 border: 2px solid ;
-                background-color: white;
+                background-color: whitesmoke;
             }
 
     
@@ -23,11 +54,6 @@ body{
     table-layout: fixed;
     
 }
-
-table {
-     margin-top: 70px;
-     margin-right: 70px; 
-    } 
 
     #img-container
     {

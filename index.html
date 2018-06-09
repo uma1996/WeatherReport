@@ -17,7 +17,9 @@
         
 </head>
 <body>
+    <!-- <img src="css\cloudy_d-e618500.jpg"> -->
     <div class="container">
+            
             <h3 class="text-center">Weather Report</h3>
                  <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
@@ -27,14 +29,32 @@
             <button id="weathermap" class="btn btn-primary">Submit</button>
             
         </div>
-       <div id="containers">
-           <span id="temp">
-           </span>
-           
-            <div class="weathervalue">
+       <div id="containers" class="results-hide">
+           <h1>TEAM-R</h1>
+           <div id="currentname"></div> 
+           <div id="location"></div>
+           <div id="btn-align">
+                <button id="cweather">C</button>
+                <button id="fweather">F</button>
+            </div>
+           <div id="dates">
+           <p id="demo"></p>
+       <script>
+          document.getElementById("demo").innerHTML = Date();
+        </script>
+        </div>
+
+        <!-- <div id="image-container" class="col-sm-4">
+                <img src=# alt="weather icon" class="img img-responsive" id="icon">
+              </div>
+        <div>
+            <img style="float:left;height:64px;width:64px" src="//ssl.gstatic.com/onebox/weather/64/fog.png" id="wob_tci">
+        </div> -->
+
+<div class="weathervalue">
                <table class="table table-striped results-hide">
                     <tr>
-                            <th>Precipitation<td id="currentPrecipitation"></td></th>
+                            <th>Pressure<td id="currentPressure"></td></th>
                     </tr>
                     <tr>
                             <th>Humidity<td id="currentHumidity"></td></th>
@@ -44,7 +64,7 @@
                         </tr>
               </table>
               <button id="temperature" class="btn btn-primary">Temperature</button>
-              <button id="precipitation" class="btn btn-primary">Precipitation</button>
+              <button id="pressure" class="btn btn-primary">Pressure</button>
               <button id="wind" class="btn btn-primary">Wind</button>
                
             </div>
@@ -62,3 +82,9 @@
 </body>
 
 </html>
+
+
+
+
+
+
