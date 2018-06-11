@@ -1,3 +1,9 @@
+.main{
+    margin-left: 10px;
+    font-size: 1cm;
+    font-family: 'Times New Roman', Times, serif;
+    }
+
 body{
     margin-top: 30px;
     background-color:skyblue;
@@ -9,21 +15,30 @@ body{
     margin-left:10vh;
 }
 
-#location{
-    font-size: 1cm;
+#currdate{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
     margin-left:10vh;
 }
 
- #dates{
-    font-style: italic;
-    font-family: 'Times New Roman', Times, serif;
+
+#tempval{
+    font-size: 1cm;
+    margin-left:20vh;
+}
+
+#tempdesc{
     font-size: 20px;
+    margin-left:10vh;
+}
 
-} 
+#image{
+    margin-left:10vh;
 
+}
 
 #btn-align{
-    margin-left: 70px;
+    margin-left: 20vh;
 }
 
 h1{
@@ -33,20 +48,24 @@ h1{
 }
     
     
-    #containers {
-                height: 130vh;
-                width: 100vh;
-                margin: 25vh auto;
-                margin-top: 35px;
-                margin-bottom: 10px;
-                border: 2px solid ;
-                background-color: whitesmoke;
+#containers {
+
+    height: 140vh;
+    width: 100vh;
+    margin: 25vh auto;
+    margin-top: 35px;
+    margin-bottom: 10px;
+    border: 2px solid ;
+    background-color: whitesmoke;
+                
             }
 
     
  h3{
-                font-family: cursive
-            }
+                
+    font-family: cursive
+            
+}
            
 .weathervalue
 {
@@ -60,13 +79,8 @@ h1{
         height: 50vh;
         width: 50vh;
     }
-    .inner{
+
+    .one {
        display: flex;
-       justify-content: "space-evenly";
+       justify-content: space-evenly;
             }
-    .outer{
-        display: flex;
-        justify-content: "space-evenly";
-        }
-        
- 

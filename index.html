@@ -29,27 +29,23 @@
             <button id="weathermap" class="btn btn-primary">Submit</button>
             
         </div>
-       <div id="containers" class="results-hide">
+       <div id="containers" style="display:none;">
            <h1>TEAM-R</h1>
-           <div id="currentname"></div> 
-           <div id="location"></div>
-           <div id="btn-align">
+           <div id="currentname"> </div>
+           <div id="currdate"><p id="date"></p>
+            <script>
+            document.getElementById("date").innerHTML = Date();
+            </script></div>
+
+                <div id="tempdesc"></div>
+                <div >
+                        <img id="image"/>
+                        <div id="tempval"></div>
+                        <div id="btn-align" style="display:none;">
                 <button id="cweather">C</button>
                 <button id="fweather">F</button>
             </div>
-           <div id="dates">
-           <p id="demo"></p>
-       <script>
-          document.getElementById("demo").innerHTML = Date();
-        </script>
         </div>
-
-        <!-- <div id="image-container" class="col-sm-4">
-                <img src=# alt="weather icon" class="img img-responsive" id="icon">
-              </div>
-        <div>
-            <img style="float:left;height:64px;width:64px" src="//ssl.gstatic.com/onebox/weather/64/fog.png" id="wob_tci">
-        </div> -->
 
 <div class="weathervalue">
                <table class="table table-striped results-hide">
@@ -68,35 +64,37 @@
               <button id="wind" class="btn btn-primary">Wind</button>
                
             </div>
-            <div id="chart-container">
+            <div id="chart-container" style="display:none;">
                 </div>
-                <div id="button-group">
-                <div class="outer">
-                    <div class="inner" id="one">1</div>
-                    <div class="inner" id="two">2</div>
-                    <div class="inner" id="three">3</div>
-                    <div class="inner" id="four">4</div>
-                    <div class="inner" id="five">5</div>
+
+                <div class="day-container" style="display:none;">
+                    <div class="one">
+                        <button id="monday" class="btn btn-primary">Mon</button>
+                        <button id="tuesday" class="btn btn-primary">Tue</button>
+                        <button id="wednesday" class="btn btn-primary">Wed</button>
+                        <button id="thursday" class="btn btn-primary">Thu</button>
+                        <button id="friday" class="btn btn-primary">Fri</button>
                 </div>
-                <div class="outer">
-                    <div class="inner" id="six">6</div>
-                    <div class="inner" id="seven">7</div>
-                    <div class="inner" id="eight">8</div>
-                    <div class="inner" id="nine">9</div>
-                    <div class="inner" id="ten">10</div>
-                </div>
-                <div class="outer">
-                    <div class="inner" id="eleven">11</div>
-                    <div class="inner" id="twelve">12</div>
-                    <div class="inner" id="thirt">13</div>
-                    <div class="inner" id="fourt">14</div>
-                    <div class="inner" id="fift">15</div>
-                </div>
-            </div>
-       
-               <img/>
+                    <div class="one">
+                            <img id="1"/>
+                            <img id="2"/>
+                            <img id="3"/>
+                            <img id="4"/>
+                            <img id="5"/>
+                    </div>
+                    <div class="one">
+                            <div id="6"></div>
+                            <div id="7"></div>
+                            <div id="8"></div>
+                            <div id="9"></div>
+                            <div id="10"></div>
+                    </div>
+                    
+                </div>    
+                     
+            </img>
         </div>
-       
+    
        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
        crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
@@ -105,6 +103,8 @@
 </body>
 
 </html>
+
+
 
 
 

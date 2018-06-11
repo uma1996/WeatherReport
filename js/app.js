@@ -1,4 +1,14 @@
-$('#weathermap').click(() => {
+$(function(){
+    $(".containers").hide();
+    $(".day-container").hide();
+    $("#btn-align").hide();
+    $("#chart-container").hide();
+})
+
+
+ $('#weathermap').click(() => {
+    $(".containers").show();
+    $("#btn-align").show();
     const cityName = $('#cityInput').val();
     $('#containers').show();
      $.ajax({
@@ -9,11 +19,20 @@ $('#weathermap').click(() => {
              const humidity = data.main.humidity;
              const wind = Math.round((data.wind.deg * 5) / 18);
              const temperature =  Math.round(data.main.temp - 270);
+             const currentdates = moment(data.dt * 1000).format('dddd, h:mm a');
+             var iconId = data.weather[0].icon;
+             var icon =  "http://openweathermap.org/img/w/" + iconId + ".png";
+             $('img').attr('src', icon);
              $('#currentPressure').html(pressure+"Hg");
              $('#currentHumidity').html(humidity+"%");
              $('#currrentWind').html(wind+"km/h");
              $('#currentname').html(cityName);
-             $("#location").html(temperature);
+             $('#currentdate').html(currentdates);
+             $("#tempdesc").html(data.weather[0].description);
+             $("#tempval").html(temperature);
+             $("#6").html(temperature);
+             $('#1').attr('src', icon);
+
                  },
          error: (err) => {
              console.log('In error callback');
@@ -30,7 +49,7 @@ $('#weathermap').click(() => {
           url: `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=27d43832d2a4adcb97fcbfa23db130aa`,
           success: (data) => {
               const temperature1 =  Math.round(data.main.temp - 270);
-              $("#location").html(temperature1);
+              $("#tempval").html(temperature1);
                   },
           error: (err) => {
               console.log('In error callback');
@@ -47,7 +66,7 @@ $('#weathermap').click(() => {
           url: `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=27d43832d2a4adcb97fcbfa23db130aa`,
           success: (data) => {
           const temperatures =  Math.round((data.main.temp - 270) * 1.8 + 32);
-              $("#location").html(temperatures);
+              $("#tempval").html(temperatures);
                   },
           error: (err) => {
               console.log('In error callback');
@@ -56,172 +75,193 @@ $('#weathermap').click(() => {
       });
   })
   
+  $('button').click(function(){
+      var a=0;
+      var b=7;
+      
+     if(this.id=="monday")
+    {
+      c=a;
+      d=b;
+    }
+     else if(this.id=="tuesday")
+    {
+      c=a+7;
+      d=b+7;
+    }
+    else if(this.id=="wednesday")
+    {
+      c=a+14;
+      d=b+14;
+    }
+     else if(this.id=="thursday")
+    {
+      c=a+21;
+      d=b+21;
+    }
+     else if(this.id=="firday")
+    {
+      c=a+28;
+      d=b+28;
+    }
+    console.log('Button Clicked');
+          var cityName = $('#cityInput').val();
+          $.ajax({
+              type: 'GET',
+              url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=c6692183353a35f1d73dbe6f90af94ba`,
+              success: (data) => {
+                  console.log('In success callback');
+                  console.log(data);
+                  listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('ddd, h:mm a'));
+                  firstList=listOfDates.slice(c, d);
+                  listOfTemp = data.list.map(ele => Math.round(ele.main.temp - 270));
+                  secondList=listOfTemp.slice(c, d);
+                  plotChart(secondList , firstList);
+              },
+              error: (err) => {
+                  console.log('In error callback');
+                  console.log(err);
+              }
+          });
   
- 
- 
- 
- // /**
- //  * This function replaces the default weather underground weather icons
- //  * @param {String} weatherIcon the url of the weather underground icon.
- //  */
- // function getIcon(weatherIcon) {
- //     switch (weatherIcon) {
- //         case "http://icons.wxug.com/i/c/k/nt_partlycloudy.gif":
- //         case "http://icons.wxug.com/i/c/k/partlycloudy.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_cloudy.gif":
- //         case "http://icons.wxug.com/i/c/k/cloudy.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/cloudy.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_chancerain.gif":
- //         case "http://icons.wxug.com/i/c/k/chancerain.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/rain_s_sunny.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_chanceflurries.gif":
- //         case "http://icons.wxug.com/i/c/k/chanceflurries.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sunny_s_snow.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_chancesleet.gif":
- //         case "http://icons.wxug.com/i/c/k/chancesleet.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/snow_s_sunny.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/chancesnow.gif":
- //         case "http://icons.wxug.com/i/c/k/nt_chancesnow.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sunny_s_snow.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_chancetstorms.gif":
- //         case "http://icons.wxug.com/i/c/k/chancetstorms.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sunny_s_rain.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_clear.gif":
- //         case "http://icons.wxug.com/i/c/k/nt_sunny.gif":
- //         case "http://icons.wxug.com/i/c/k/clear.gif":
- //         case "http://icons.wxug.com/i/c/k/sunny.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sunny.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_flurries.gif":
- //         case "http://icons.wxug.com/i/c/k/flurries.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/snow_light.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_fog.gif":
- //         case "http://icons.wxug.com/i/c/k/nt_hazy.gif":
- //         case "http://icons.wxug.com/i/c/k/fog.gif":
- //         case "http://icons.wxug.com/i/c/k/hazy.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/fog.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_mostlycloudy.gif":
- //         case "http://icons.wxug.com/i/c/k/mostlycloudy.gif":
- //             $("#icon").attr('src', "https://ssl.gstatic.com/onebox/weather/64/cloudy_s_sunny.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/mostlysunny.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sunny_s_cloudy.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_partlysunny.gif":
- //         case "http://icons.wxug.com/i/c/k/partlysunny.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_sleet.gif":
- //         case "http://icons.wxug.com/i/c/k/sleet.gif":
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/sleet.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_rain.gif":
- //         case "http://icons.wxug.com/i/c/k/rain.gif":
- //             $("#icon").attr('src', "https://ssl.gstatic.com/onebox/weather/64/rain.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_snow.gif":
- //         case "http://icons.wxug.com/i/c/k/snow.gif":
- //             $("#icon").attr("src", "https://ssl.gstatif":
- //         case "http://icons.wxug.com/i/c/k/tstorms.gif"c.com/onebox/weather/64/snow.png");
- //             break;
- //         case "http://icons.wxug.com/i/c/k/nt_tstorms.gi:
- //             $("#icon").attr("src", "https://ssl.gstatic.com/onebox/weather/64/thunderstorms.png");
- //             break;
- //     }
- // }
- 
- // $(document).ready(function() {
- //     getFWeather();
- //  });
+      var plotChart=function(secondList, firstlist){
+          console.log("Button clicked");
+          var cityName=$('#cityInput').val();
+          Highcharts.chart('chart-container', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Temperature'
+            },
+            xAxis: {
+                categories: firstlist
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature'
+                },
+                labels: {
+                    formatter: function () { return this.value + '°'; }
+                }
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+                }
+            },
+            series: [{
+                name: cityName,
+                marker: {
+                    symbol: 'square'
+                },
+                data: secondList
+            }]
+        });
+     }
+  })
   
- 
- 
+  
  
  $('#temperature').click(() => {
-     const cityName = $('#cityInput').val();
-     $.ajax({
-         type: 'GET',
-         url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=133b42fff699f45866056ed2e4a093db`,
-         success: (data) => {
-             var iconcode = data.list[0].weather[0].icon;
-             var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-             $('img').attr('src', iconurl);
-            //  var iconcode1 = data.list[0].weather[1].icon;
-            //  var iconurl1 = "http://openweathermap.org/img/w/" + iconcode1 + ".png";
-            //  $('img').attr('src', iconurl1);
+    $(".day-container").show();
+    $("#chart-container").show();
+    var a=0;
+    var b=7;
+    console.log('Button Clicked');
+        var cityName = $('#cityInput').val();
+        $.ajax({
+            type: 'GET',
+            url: `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=c6692183353a35f1d73dbe6f90af94ba`,
+            success: (data) => {
+                console.log('In success callback');
+                console.log(data);
+                listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('ddd, h:mm a'));
+                console.log(listOfDates);
+                firstList=listOfDates.slice(a, b);
+                listOfTemp = data.list.map(ele => Math.round(ele.main.temp - 270));
+                console.log(listOfTemp.length);
+                secondList=listOfTemp.slice(a, b);
+                plotChart(secondList  , firstList);
+                var iconId = data.list[0].weather[0].icon;
+                var icon =  "http://openweathermap.org/img/w/" + iconId + ".png";
+                $("#2").attr('src',icon);
+                $("#7").html(Math.ceil((data.list[5].main.temp-273)));
+                var iconId1 = data.list[12].weather[0].icon;
+                var icon1 =  "http://openweathermap.org/img/w/" + iconId1 + ".png";
+                $("#3").attr('src',icon3);
+                $("#8").html(Math.ceil((data.list[12].main.temp-273)));
+                var iconId2 = data.list[20].weather[0].icon;
+                var icon2 =  "http://openweathermap.org/img/w/" + iconId2 + ".png";
+                $("#4").attr('src',icon3);
+                $("#9").html(Math.ceil((data.list[20].main.temp-273)));
+                var iconId3 = data.list[28].weather[0].icon;
+                var icon3 =  "http://openweathermap.org/img/w/" + iconId3 + ".png";
+                $("#5").attr('src',icon3);
+                $("#10").html(Math.ceil((data.list[28].main.temp-273)));
+                
+            },
+           
+               error: (err) => {
+                console.log('In error callback');
+                console.log(err);
+            }
+        });
 
-             console.log('In success callback');
-             console.log(data);
-            //  var a= data.list[0].dt_txt[0];
-            //  var listOfDates = "http://openweathermap.org/img/w/" + a;
-            listOfDates = data.list.map((ele) => moment(ele.dt * 1000).format('h:mm a'));
-             console.log(listOfDates);
-             listOfTemp = data.list.map(ele => Math.round(ele.main.temp - 270));
-             console.log(listOfTemp);
-             plotChart(listOfTemp, listOfDates);
-             
-         },
-         error: (err) => {
-             console.log('In error callback');
-             console.log(err);
-         }
-     });
- 
-     const plotChart = (tempArr, datesArr) => {
-         $('#chart-container').show();
-         Highcharts.chart('chart-container', {
-             chart: {
-                 type: 'line'
-             },
-             title: {
-                 text: 'Temperature'
-             },
-             xAxis: {
-                 categories: datesArr
-             },
-             yAxis: {
-                 title: {
-                     text: 'Temperature'
-                 },
-                 labels: {
-                     formatter: function () { return this.value + '°'; }
-                 }
-             },
-             tooltip: {
-                 crosshairs: true,
-                 shared: true
-             },
-             plotOptions: {
-                 line: {
-                     marker: {
-                         radius: 4,
-                         lineColor: '#666666',
-                         lineWidth: 1
-                     }
-                 }
-             },
-             series: [{
-                 name: cityName,
-                 marker: {
-                     symbol: 'square'
-                 },
-                 data: tempArr
-             }]
-         });
-     }
- 
- })
- 
+    var plotChart=function(secondList, firstlist){
+        console.log("Button clicked");
+        var cityName=$('#cityInput').val();
+        Highcharts.chart('chart-container', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Temperature'
+            },
+            xAxis: {
+                categories: firstlist
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature'
+                },
+                labels: {
+                    formatter: function () { return this.value + '°'; }
+                }
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                line: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+                }
+            },
+            series: [{
+                name: cityName,
+                marker: {
+                    symbol: 'square'
+                },
+                data: secondList
+            }]
+        });
+    }
+})
+
+
  $('#pressure').click(() => {
      const cityNames = $('#cityInput').val();
      $.ajax({
@@ -231,9 +271,9 @@ $('#weathermap').click(() => {
              console.log('In success callback');
              console.log(data);
              listOfDatess = data.list.map((ele) => moment(ele.dt * 1000).format('h:mm a'));
-             console.log(listOfDates);
+             console.log(listOfDatess);
              listOfTemps = data.list.map(ele => Math.round(ele.main.pressure));
-             console.log(listOfTemp);
+             console.log(listOfTemps);
              plotCharts(listOfTemps, listOfDatess);
              
          },
@@ -341,20 +381,27 @@ $('#weathermap').click(() => {
             title: {
               text: 'wind'
             },
-            xAxis: {
+            yAxis: {
+                
+
                 reversed: false,
                 title: {
                   enabled: true,
-                  text: 'Altitude'
+                  categories: datesArr1,
+                  
                 },
-                labels: {
-                  format: '{value} km'
-                },
+                
                 maxPadding: 0.05,
                 showLastLabel: true
               },     
-                 yAxis: {
-                     categories: datesArr1,
+                 xAxis: {
+                    title: {
+                        text: 'wind'
+                      },
+                     labels: {
+                        formatter: function () { return this.value + 'km/hr'; }
+                    },
+                    
                     title: {
                       text: 'width'
                     },
@@ -365,16 +412,14 @@ $('#weathermap').click(() => {
             legend: {
               enabled: false
             },
-            // tooltip: {
-            //   headerFormat: '<b>{series.name}</b><br/>',
-            //   pointFormat: '{point.x} km: {point.y}°C'
-            // },
             plotOptions: {
-              spline: {
-                marker: {
-                  enable: false
+                line: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
                 }
-              }
             },
             series: [{
                 name: cityName1,
@@ -385,26 +430,21 @@ $('#weathermap').click(() => {
             }]
           });
         }
-    })
+  })
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
-    
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
